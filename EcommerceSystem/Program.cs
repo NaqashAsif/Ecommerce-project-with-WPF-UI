@@ -4,7 +4,18 @@ using EcommerceSystem.Core.Services;
 using EcommerceSystem.DAL;
 using EcommerceSystem.DAL.Repositories;
 using EcommerceSystem.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text;
+var ServiceCollection = new ServiceCollection();
+ConfigureService(ServiceCollection);
+var ServiceProvider = ServiceCollection.BuildServiceProvider();
+void ConfigureService(ServiceCollection serviceCollection)
+{
+    serviceCollection.AddTransient<IProductRepostory, ProductRepostory>();
+    serviceCollection.AddTransient<ICustomerRepostory, CustomerRepository>();
+    serviceCollection.AddTransient<IProductService, ProductService>();
+    serviceCollection.AddTransient<ICustomerService, CustomerService>();
+}
 StringBuilder headerdesign = new StringBuilder();
 headerdesign
             .Append('-', 120)
@@ -20,11 +31,12 @@ Console.Write("\t\tMAIN MENU\n" +
               "1:ADMIN\n" +
               "2:CUSTOMER\n" +
               "ENTER OPTION: ");
+var productService = ServiceProvider.GetService<IProductService>();
+var CustomerService = ServiceProvider.GetService<ICustomerService>();
 if (int.Parse(Console.ReadLine()) == 1)
 {
     while (true)
     {
-        IProductService productService = new ProductService();
         Console.Write("\t\tADMIN MENU\n" +
                        "1:ADD PRODUCTS\n" +
                        "2:REMOVE PRODUCT\n" +
@@ -98,18 +110,17 @@ else
         customerDto.Email=Console.ReadLine();
         Console.Write("Enter Customer Shipping Address");
         customerDto.ShippingAddress=Console.ReadLine();
-        ICustomerRepostory customerRepostory =new CustomerRepository();
-        await customerRepostory.AddCustomerAsync(customerDto);
+        await CustomerService.AddCustomerAsync(customerDto);
         ProductRepostory productRepostory = new ProductRepostory();
         await productRepostory.ViewProductsAsync();
         Console.Write("Enter Product ID To Order: ");
         int productId=int.Parse(Console.ReadLine());
         Console.Write("Enter Product Quantity To Order: ");
         int quantity= int.Parse(Console.ReadLine());
-        var customerId = await customerRepostory.GetCustomerIdAsync();
+        var customerId = await CustomerService.GetCustomerIdAsync();
         if (customerId.HasValue)
         {
-            var amount=await customerRepostory.PlaceOrderAsync(productId, customerId.Value, quantity);
+            var amount=await CustomerService.PlaceOrderAsync(productId, customerId.Value, quantity);
             Console.WriteLine(amount);
 
         }

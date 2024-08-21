@@ -13,10 +13,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\EcommerceSystem.Core\EcommerceSystem.Core.csproj" />
+    <ProjectReference Include="..\EcommerceSystem.DAL\EcommerceSystem.DAL.csproj" />
     <ProjectReference Include="..\EcommerceSystem.Services\EcommerceSystem.Services.csproj" />
   </ItemGroup>
 

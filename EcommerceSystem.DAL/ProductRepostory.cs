@@ -2,11 +2,18 @@
 using EcommerceSystem.Core.Repostories;
 using EcommerceSystem.DAL.DataBaseContext;
 using EcommerceSystem.DAL.Entities;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
+using System.Configuration;
 namespace EcommerceSystem.DAL
 {
     public class ProductRepostory: IProductRepostory
     {
+        private readonly string connectionString;
+
+        public ProductRepostory()
+        {
+            connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        }
         public async Task RemoveProductAsync(int Id)
         {
             var context = new EcommerceSystemdb();
@@ -22,7 +29,6 @@ namespace EcommerceSystem.DAL
                 Console.WriteLine("Product not found!");
             }
         }
-
         public async Task AddProductAsync(ProductDto productDto)
         {
             var context = new EcommerceSystemdb();
@@ -34,11 +40,33 @@ namespace EcommerceSystem.DAL
             await context.SaveChangesAsync();
             Console.WriteLine("Product added successfully!");
         }
-
         public async Task ViewProductsAsync()
         {
-            var context = new EcommerceSystemdb();
-            var products = await context.Products.ToListAsync();
+            var products = new List<Product>();
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                await connection.OpenAsync();
+
+                var query = "SELECT Id, Name, Price, Stock FROM Products";
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            products.Add(new Product
+                            {
+                                Id = reader.GetInt32(0),
+                                Name = reader.GetString(1),
+                                Price = reader.GetDecimal(2),
+                                Stock = reader.GetInt32(3)
+                            });
+                        }
+                    }
+                }
+            }
             Console.WriteLine("Product List:");
             foreach (var product in products)
             {
