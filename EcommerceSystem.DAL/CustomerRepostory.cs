@@ -7,6 +7,21 @@ namespace EcommerceSystem.DAL.Repositories
 {
     public class CustomerRepository : ICustomerRepostory
     {
+        public async Task<List<CustomerDto>> GetAllCustomersAsync()
+        {
+            using var context = new EcommerceSystemdb();
+            var customers = await context.Customers
+                .FromSqlRaw("EXEC GetAllCustomers")
+                .ToListAsync();
+            var customerDtos = customers.Select(c => new CustomerDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Email = c.Email,
+                ShippingAddress = c.ShippingAddress
+            }).ToList();
+            return customerDtos;
+        }
         public async Task AddCustomerAsync(CustomerDto customerDto)
         {
             var context = new EcommerceSystemdb();

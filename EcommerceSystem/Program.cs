@@ -41,8 +41,9 @@ if (int.Parse(Console.ReadLine()) == 1)
                        "1:ADD PRODUCTS\n" +
                        "2:REMOVE PRODUCT\n" +
                        "3:UPDATE PRODUCT\n" +
-                       "4:VIEW PRODUCT\n" +
-                       "5:QUIT\n" +
+                       "4:VIEW PRODUCTS\n" +
+                       "5:VIEW CUSTOMERS\n" +
+                       "6:QUIT\n" +
                        "ENTER OPTION:");
         int choice = Convert.ToInt32(Console.ReadLine());
         switch (choice)
@@ -86,13 +87,27 @@ if (int.Parse(Console.ReadLine()) == 1)
                 break;
             case 4:
                 {
-                    await productService.ViewProductsAsync();
+                    var products=await productService.ViewProductsAsync();
+                    foreach (var product in products)
+                    {
+                        Console.WriteLine($"Id: {product.Id}, Name: {product.Name}, Price: {product.Price}, Stock: {product.Stock}");
+
+                    }
                     break;
                 }
             case 5:
+                {
+                    var customers=await CustomerService.GetAllCustomersAsync();
+                    foreach (var customer in customers)
+                    {
+                        Console.WriteLine($"Id: {customer.Id}, Name: {customer.Name}, Email: {customer.Email}, Address: {customer.ShippingAddress}");
+                    }
+                    break;
+                }
+            case 6:
                 return;
         }
-        if (choice == 5)
+        if (choice == 6)
             break;
     }
 }
@@ -104,11 +119,11 @@ else
     if (int.Parse(Console.ReadLine()) == 1)
     {
         CustomerDto customerDto = new CustomerDto();
-        Console.Write("Enter Customer Name");
+        Console.Write("Enter Customer Name: ");
         customerDto.Name=Console.ReadLine();
-        Console.Write("Enter Customer Email");
+        Console.Write("Enter Customer Email: ");
         customerDto.Email=Console.ReadLine();
-        Console.Write("Enter Customer Shipping Address");
+        Console.Write("Enter Customer Shipping Address: ");
         customerDto.ShippingAddress=Console.ReadLine();
         await CustomerService.AddCustomerAsync(customerDto);
         ProductRepostory productRepostory = new ProductRepostory();

@@ -1,6 +1,7 @@
 ﻿using EcommerceSystem.Core.DTOS;
 using EcommerceSystem.Core.Repostories;
 using EcommerceSystem.Core.Services;
+using EcommerceSystem.DAL.DataBaseContext;
 namespace EcommerceSystem.Services
 {
     public class CustomerService : ICustomerService
@@ -13,6 +14,11 @@ namespace EcommerceSystem.Services
         public async Task AddCustomerAsync(CustomerDto customerDto)
         {
             await _customerRepostory.AddCustomerAsync(customerDto);
+        }
+        public async Task<List<CustomerDto>> GetAllCustomersAsync()
+        {
+            
+            return await _customerRepostory.GetAllCustomersAsync();
         }
 
         public async Task<string> PlaceOrderAsync(int productId, int customerId, int quantity) 

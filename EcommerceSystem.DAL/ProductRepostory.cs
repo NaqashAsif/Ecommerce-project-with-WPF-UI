@@ -40,7 +40,7 @@ namespace EcommerceSystem.DAL
             await context.SaveChangesAsync();
             Console.WriteLine("Product added successfully!");
         }
-        public async Task ViewProductsAsync()
+        public async Task<List<ProductDto>> ViewProductsAsync()
         {
             var products = new List<Product>();
 
@@ -67,11 +67,14 @@ namespace EcommerceSystem.DAL
                     }
                 }
             }
-            Console.WriteLine("Product List:");
-            foreach (var product in products)
+            var productDtos = products.Select(c => new ProductDto
             {
-                Console.WriteLine($"ID: {product.Id}, Name: {product.Name}, Price: {product.Price}, Stock: {product.Stock}");
-            }
+                Id = c.Id,
+                Name = c.Name,
+                Price= c.Price,
+                Stock = c.Stock
+            }).ToList();
+                return productDtos;
         }
         public async Task UpdateProductAsync(int Id, ProductDto productDto)
         {

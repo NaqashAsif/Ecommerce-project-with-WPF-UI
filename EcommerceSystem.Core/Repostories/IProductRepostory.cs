@@ -5,7 +5,7 @@ namespace EcommerceSystem.Core.Repostories
     {
         public Task RemoveProductAsync(int Id);
         public Task AddProductAsync(ProductDto productDto);
-        public Task ViewProductsAsync();
+        public Task<List<ProductDto>> ViewProductsAsync();
         public Task UpdateProductAsync(int Id, ProductDto productDto);
     }
 }

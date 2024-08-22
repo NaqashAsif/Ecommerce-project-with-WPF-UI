@@ -21,9 +21,9 @@ namespace EcommerceSystem.Services
             await _productRepostory.AddProductAsync(productDto);
         }
 
-        public async Task ViewProductsAsync()
+        public async Task<List<ProductDto>> ViewProductsAsync()
         {
-            await _productRepostory.ViewProductsAsync();
+            return await _productRepostory.ViewProductsAsync();
         }
 
         public async Task UpdateProductAsync(int Id, ProductDto productDto)
