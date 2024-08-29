@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EcommerceSystem.Core\EcommerceSystem.Core.csproj" />
+    <ProjectReference Include="..\EcommerceSystem.DAL\EcommerceSystem.DAL.csproj" />
+    <ProjectReference Include="..\EcommerceSystem.Services\EcommerceSystem.Services.csproj" />
+  </ItemGroup>
+
+</Project>

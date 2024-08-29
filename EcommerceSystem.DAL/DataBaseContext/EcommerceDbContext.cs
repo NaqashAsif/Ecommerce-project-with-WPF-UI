@@ -3,48 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 namespace EcommerceSystem.DAL.DataBaseContext
 {
-    //public class EcommerceSystemdb : DbContext
-    //{
-    //    public DbSet<Customer> Customers { get; set; }
-    //    public DbSet<Product> Products { get; set; }
-    //    public DbSet<Order> Orders { get; set; }
-    //    public DbSet<OrderDetail> OrderDetails { get; set; }
-    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //    {
-    //        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-    //        optionsBuilder.UseSqlServer(connectionString);
-    //    }
-
-    //    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //    {
-    //        modelBuilder.Entity<Order>()
-    //            .Property(o => o.TotalAmount)
-    //            .HasPrecision(18, 2);
-
-    //        modelBuilder.Entity<OrderDetail>()
-    //            .Property(od => od.Price)
-    //            .HasPrecision(18, 2);
-
-    //        modelBuilder.Entity<Product>()
-    //            .Property(p => p.Price)
-    //            .HasPrecision(18, 2);
-    //    }
-    //}
-
     public class EcommerceSystemdb : DbContext
     {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-        public EcommerceSystemdb()
-        {
-            
-        }
-        public EcommerceSystemdb(DbContextOptions<EcommerceSystemdb> options) : base(options)
-        {
-        }
-
+        public EcommerceSystemdb() { }
+        public EcommerceSystemdb(DbContextOptions<EcommerceSystemdb> options) : base(options) { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -53,7 +19,6 @@ namespace EcommerceSystem.DAL.DataBaseContext
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Order>()

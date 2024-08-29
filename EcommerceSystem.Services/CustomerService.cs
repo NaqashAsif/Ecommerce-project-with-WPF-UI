@@ -1,7 +1,6 @@
 ﻿using EcommerceSystem.Core.DTOS;
 using EcommerceSystem.Core.Repostories;
 using EcommerceSystem.Core.Services;
-using EcommerceSystem.DAL.DataBaseContext;
 namespace EcommerceSystem.Services
 {
     public class CustomerService : ICustomerService

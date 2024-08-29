@@ -11,12 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceSystem.Services", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceSystem.DAL", "..\EcommerceSystem.DAL\EcommerceSystem.DAL.csproj", "{C5F0F850-E447-4EA3-B714-D2DC27F7F80E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F9D8CE01-C77A-45A2-BC3D-B9A87D34CF38}"
-	ProjectSection(SolutionItems) = preProject
-		App.config = App.config
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceSystem.Tests", "..\EcommerceSystem.Tests\EcommerceSystem.Tests.csproj", "{16143480-C453-4624-A65A-37B78CB5CCC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommerceSystem.Tests", "..\EcommerceSystem.Tests\EcommerceSystem.Tests.csproj", "{16143480-C453-4624-A65A-37B78CB5CCC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceSystem.UI", "..\EcommerceSystem.UI\EcommerceSystem.UI.csproj", "{FFF8361F-B597-47FB-8E96-B82C8CA93585}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +41,10 @@ Global
 		{16143480-C453-4624-A65A-37B78CB5CCC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16143480-C453-4624-A65A-37B78CB5CCC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16143480-C453-4624-A65A-37B78CB5CCC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFF8361F-B597-47FB-8E96-B82C8CA93585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFF8361F-B597-47FB-8E96-B82C8CA93585}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFF8361F-B597-47FB-8E96-B82C8CA93585}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFF8361F-B597-47FB-8E96-B82C8CA93585}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

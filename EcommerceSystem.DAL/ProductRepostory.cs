@@ -3,29 +3,29 @@ using EcommerceSystem.Core.Repostories;
 using EcommerceSystem.DAL.DataBaseContext;
 using EcommerceSystem.DAL.Entities;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 namespace EcommerceSystem.DAL
 {
-    public class ProductRepostory: IProductRepostory
+    public class ProductRepostory : IProductRepostory
     {
         private readonly EcommerceSystemdb _context;
         public ProductRepostory(EcommerceSystemdb context)
         {
             _context = context;
         }
-        private readonly string connectionString;
+       // private readonly string connectionString;
         public ProductRepostory()
         {
             _context = new EcommerceSystemdb();
-            connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+           // connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         }
         public async Task RemoveProductAsync(int Id)
         {
-           // var context = new EcommerceSystemdb();
             var product = await _context.Products.FindAsync(Id);
             if (product != null)
             {
-               _context.Products.Remove(product);
+                _context.Products.Remove(product);
                 await _context.SaveChangesAsync();
                 Console.WriteLine("Product removed successfully!");
             }
@@ -36,7 +36,6 @@ namespace EcommerceSystem.DAL
         }
         public async Task AddProductAsync(ProductDto productDto)
         {
-            //var context = new EcommerceSystemdb();
             var product = new Product { Name = productDto.Name, Price = productDto.Price, Stock = productDto.Stock };
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
@@ -44,39 +43,50 @@ namespace EcommerceSystem.DAL
         }
         public async Task<List<ProductDto>> ViewProductsAsync()
         {
-            var products = new List<Product>();
+            var products = await _context.Products
+        .Select(p => new ProductDto
+        {
+            Id = p.Id,
+            Name = p.Name,
+            Price = p.Price,
+            Stock = p.Stock
+        })
+        .ToListAsync();
 
-            using (var connection = new SqlConnection(connectionString))
+            return products;
+            /*var products = new list<product>();
+
+            using (var connection = new sqlconnection(connectionstring))
             {
-                await connection.OpenAsync();
+                await connection.openasync();
 
-                var query = "SELECT Id, Name, Price, Stock FROM Products";
+                var query = "select id, name, price, stock from products";
 
-                using (var command = new SqlCommand(query, connection))
+                using (var command = new sqlcommand(query, connection))
                 {
-                    using (var reader = await command.ExecuteReaderAsync())
+                    using (var reader = await command.executereaderasync())
                     {
-                        while (await reader.ReadAsync())
+                        while (await reader.readasync())
                         {
-                            products.Add(new Product
+                            products.add(new product
                             {
-                                Id = reader.GetInt32(0),
-                                Name = reader.GetString(1),
-                                Price = reader.GetDecimal(2),
-                                Stock = reader.GetInt32(3)
+                                id = reader.getint32(0),
+                                name = reader.getstring(1),
+                                price = reader.getdecimal(2),
+                                stock = reader.getint32(3)
                             });
                         }
                     }
                 }
             }
-            var productDtos = products.Select(c => new ProductDto
+            var productdtos = products.select(c => new productdto
             {
-                Id = c.Id,
-                Name = c.Name,
-                Price= c.Price,
-                Stock = c.Stock
-            }).ToList();
-            return productDtos;
+                id = c.id,
+                name = c.name,
+                price = c.price,
+                stock = c.stock
+            }).tolist();
+            return productdtos;*/
         }
         public async Task UpdateProductAsync(int Id, ProductDto productDto)
         {
@@ -96,3 +106,5 @@ namespace EcommerceSystem.DAL
         }
     }
 }
+
+

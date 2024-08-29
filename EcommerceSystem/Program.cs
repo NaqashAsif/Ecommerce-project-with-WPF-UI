@@ -16,6 +16,7 @@ void ConfigureService(ServiceCollection serviceCollection)
     serviceCollection.AddTransient<IProductService, ProductService>();
     serviceCollection.AddTransient<ICustomerService, CustomerService>();
 }
+
 StringBuilder headerdesign = new StringBuilder();
 headerdesign
             .Append('-', 120)
@@ -41,7 +42,7 @@ if (int.Parse(Console.ReadLine()) == 1)
                        "1:ADD PRODUCTS\n" +
                        "2:REMOVE PRODUCT\n" +
                        "3:UPDATE PRODUCT\n" +
-                       "4:VIEW PRODUCTS(By ADO.Net)\n" +
+                       "4:VIEW PRODUCTS\n" +
                        "5:VIEW CUSTOMERS(By Stored Procdure)\n" +
                        "6:QUIT\n" +
                        "ENTER OPTION:");
@@ -130,7 +131,12 @@ else
         Console.Write("Enter Customer Shipping Address: ");
         customerDto.ShippingAddress = Console.ReadLine();
         await CustomerService.AddCustomerAsync(customerDto);
-        await productService.ViewProductsAsync();
+        var products = await productService.ViewProductsAsync();
+        foreach (var product in products)
+        {
+            Console.WriteLine($"Id: {product.Id}, Name: {product.Name}, Price: {product.Price}, Stock: {product.Stock}");
+
+        }
         Console.Write("Enter Product ID To Order: ");
         int productId = int.Parse(Console.ReadLine());
         Console.Write("Enter Product Quantity To Order: ");
@@ -151,7 +157,12 @@ else
         Console.WriteLine("Enter Customer ID: ");
         int customerId = int.Parse(Console.ReadLine());
         ICustomerRepostory customerRepostory = new CustomerRepository();
-        await productService.ViewProductsAsync();
+        var products = await productService.ViewProductsAsync();
+        foreach (var product in products)
+        {
+            Console.WriteLine($"Id: {product.Id}, Name: {product.Name}, Price: {product.Price}, Stock: {product.Stock}");
+
+        }
         Console.Write("Enter Product ID To Order: ");
         int productId = int.Parse(Console.ReadLine());
         Console.Write("Enter Product Quantity To Order: ");
@@ -162,207 +173,3 @@ else
     else
         Console.WriteLine("INVALID OPTION!");
 }
-
-//public class Program
-//{
-//    private readonly IProductService _productService;
-//    private readonly ICustomerService _customerService;
-
-//    public Program(IProductService productService, ICustomerService customerService)
-//    {
-//        _productService = productService;
-//        _customerService = customerService;
-//    }
-
-//    public async Task RunAsync()
-//    {
-//        StringBuilder headerdesign = new StringBuilder();
-//        headerdesign
-//                    .Append('-', 120)
-//                    .AppendLine()
-//                    .Append(' ', 45)
-//                    .Append("WELCOME TO E-COMMERCE SYSTEM SOFTWARE")
-//                    .Append(' ', 45)
-//                    .AppendLine()
-//                    .Append('-', 120);
-//        Console.WriteLine(headerdesign);
-//        Console.Write("\t\tMAIN MENU\n" +
-//                      "SELECT OPTION FROM GIVEN BELOW:\n" +
-//                      "1:ADMIN\n" +
-//                      "2:CUSTOMER\n" +
-//                      "ENTER OPTION: ");
-//        int choice = int.Parse(Console.ReadLine());
-//        if (choice == 1)
-//        {
-//            await AdminMenu();
-//        }
-//        else if (choice == 2)
-//        {
-//            await CustomerMenu();
-//        }
-//        else
-//        {
-//            Console.WriteLine("INVALID OPTION!");
-//        }
-//    }
-
-//    public async Task AdminMenu()
-//    {
-//        while (true)
-//        {
-//            Console.Write("\t\tADMIN MENU\n" +
-//                           "1:ADD PRODUCTS\n" +
-//                           "2:REMOVE PRODUCT\n" +
-//                           "3:UPDATE PRODUCT\n" +
-//                           "4:VIEW PRODUCTS(By ADO.Net)\n" +
-//                           "5:VIEW CUSTOMERS(By Stored Procedure)\n" +
-//                           "6:QUIT\n" +
-//                           "ENTER OPTION:");
-//            int choice = Convert.ToInt32(Console.ReadLine());
-
-//            switch (choice)
-//            {
-//                case 1:
-//                    {
-//                        ProductDto productDto = new ProductDto();
-//                        Console.Write("Enter product name:");
-//                        productDto.Name = Console.ReadLine();
-
-//                        Console.Write("Enter product price:");
-//                        productDto.Price = decimal.Parse(Console.ReadLine());
-
-//                        Console.Write("Enter product stock:");
-//                        productDto.Stock = int.Parse(Console.ReadLine());
-
-//                        await _productService.AddProductAsync(productDto);
-//                        break;
-//                    }
-//                case 2:
-//                    {
-//                        Console.Write("Enter Id To Remove:");
-//                        int id = int.Parse(Console.ReadLine());
-//                        await _productService.RemoveProductAsync(id);
-//                        break;
-//                    }
-//                case 3:
-//                    {
-//                        ProductDto productDto = new ProductDto();
-//                        Console.Write("Enter Id To Update:");
-//                        int Id = int.Parse(Console.ReadLine());
-
-//                        Console.Write("Enter new product name:");
-//                        productDto.Name = Console.ReadLine();
-
-//                        Console.Write("Enter new product price:");
-//                        productDto.Price = decimal.Parse(Console.ReadLine());
-
-//                        Console.Write("Enter new product stock:");
-//                        productDto.Stock = int.Parse(Console.ReadLine());
-
-//                        await _productService.UpdateProductAsync(Id, productDto);
-//                        break;
-//                    }
-//                case 4:
-//                    {
-//                        var products = await _productService.ViewProductsAsync();
-//                        foreach (var product in products)
-//                        {
-//                            Console.WriteLine($"Id: {product.Id}, Name: {product.Name}, Price: {product.Price}, Stock: {product.Stock}");
-//                        }
-//                        break;
-//                    }
-//                case 5:
-//                    {
-//                        var customers = await _customerService.GetAllCustomersAsync();
-//                        foreach (var customer in customers)
-//                        {
-//                            Console.WriteLine($"Id: {customer.Id}, Name: {customer.Name}, Email: {customer.Email}, Address: {customer.ShippingAddress}");
-//                        }
-//                        break;
-//                    }
-//                case 6:
-//                    return;
-//                default:
-//                    Console.WriteLine("INVALID CHOICE!");
-//                    break;
-//            }
-//        }
-//    }
-
-//    public async Task CustomerMenu()
-//    {
-//        Console.Write("1:NEW CUSTOMER\n" +
-//                      "2:EXISTING CUSTOMER\n" +
-//                      "ENTER OPTION: ");
-//        int option = int.Parse(Console.ReadLine());
-
-//        if (option == 1)
-//        {
-//            CustomerDto customerDto = new CustomerDto();
-//            Console.Write("Enter Customer Name: ");
-//            customerDto.Name = Console.ReadLine();
-//            Console.Write("Enter Customer Email: ");
-//            customerDto.Email = Console.ReadLine();
-//            Console.Write("Enter Customer Shipping Address: ");
-//            customerDto.ShippingAddress = Console.ReadLine();
-
-//            await _customerService.AddCustomerAsync(customerDto);
-
-//            await _productService.ViewProductsAsync();
-//            Console.Write("Enter Product ID To Order: ");
-//            int productId = int.Parse(Console.ReadLine());
-//            Console.Write("Enter Product Quantity To Order: ");
-//            int quantity = int.Parse(Console.ReadLine());
-
-//            var customerId = await _customerService.GetCustomerIdAsync();
-//            if (customerId.HasValue)
-//            {
-//                var amount = await _customerService.PlaceOrderAsync(productId, customerId.Value, quantity);
-//                Console.WriteLine(amount);
-//            }
-//            else
-//            {
-//                Console.WriteLine("Customer is not added in system!");
-//            }
-//        }
-//        else if (option == 2)
-//        {
-//            Console.WriteLine("Enter Customer ID: ");
-//            int customerId = int.Parse(Console.ReadLine());
-
-//            await _productService.ViewProductsAsync();
-//            Console.Write("Enter Product ID To Order: ");
-//            int productId = int.Parse(Console.ReadLine());
-//            Console.Write("Enter Product Quantity To Order: ");
-//            int quantity = int.Parse(Console.ReadLine());
-
-//            var amount = await _customerService.PlaceOrderAsync(productId, customerId, quantity);
-//            Console.WriteLine(amount);
-//        }
-//        else
-//        {
-//            Console.WriteLine("INVALID OPTION!");
-//        }
-//    }
-
-//    public static void ConfigureService(IServiceCollection serviceCollection)
-//    {
-//        serviceCollection.AddTransient<IProductRepostory, ProductRepostory>();
-//        serviceCollection.AddTransient<ICustomerRepostory, CustomerRepository>();
-//        serviceCollection.AddTransient<IProductService, ProductService>();
-//        serviceCollection.AddTransient<ICustomerService, CustomerService>();
-//    }
-
-//    public static async Task Main(string[] args)
-//    {
-//        var serviceCollection = new ServiceCollection();
-//        ConfigureService(serviceCollection);
-//        var serviceProvider = serviceCollection.BuildServiceProvider();
-
-//        var productService = serviceProvider.GetService<IProductService>();
-//        var customerService = serviceProvider.GetService<ICustomerService>();
-
-//        var program = new Program(productService, customerService);
-//        await program.RunAsync();
-//    }
-//}

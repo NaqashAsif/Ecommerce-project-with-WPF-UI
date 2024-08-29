@@ -1,10 +1,16 @@
 ﻿using EcommerceSystem.Core.Services;
 using EcommerceSystem.Core.Repostories;
 using EcommerceSystem.Core.DTOS;
+using EcommerceSystem.DAL;
 namespace EcommerceSystem.Services
 {
     public class ProductService: IProductService
     {
+        private IProductRepostory productRepostory=new ProductRepostory();
+        public ProductService()
+        {
+            _productRepostory = productRepostory;
+        }
         private readonly IProductRepostory _productRepostory;
         public ProductService(IProductRepostory productRepostory)
         {
