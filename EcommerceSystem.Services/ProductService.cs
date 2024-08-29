@@ -15,17 +15,14 @@ namespace EcommerceSystem.Services
             await _productRepostory.RemoveProductAsync(Id);
 
         }
-
         public async Task AddProductAsync(ProductDto productDto)
         {
             await _productRepostory.AddProductAsync(productDto);
         }
-
         public async Task<List<ProductDto>> ViewProductsAsync()
         {
             return await _productRepostory.ViewProductsAsync();
         }
-
         public async Task UpdateProductAsync(int Id, ProductDto productDto)
         {
             await _productRepostory.UpdateProductAsync(Id,productDto);

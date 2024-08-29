@@ -7,10 +7,18 @@ namespace EcommerceSystem.DAL.Repositories
 {
     public class CustomerRepository : ICustomerRepostory
     {
+        private readonly EcommerceSystemdb _context;
+        public CustomerRepository()
+        {
+            _context = new EcommerceSystemdb();
+        }
+        public CustomerRepository(EcommerceSystemdb context)
+        {
+            _context=context;
+        }
         public async Task<List<CustomerDto>> GetAllCustomersAsync()
         {
-            using var context = new EcommerceSystemdb();
-            var customers = await context.Customers
+            var customers = await _context.Customers
                 .FromSqlRaw("EXEC GetAllCustomers")
                 .ToListAsync();
             var customerDtos = customers.Select(c => new CustomerDto
@@ -22,18 +30,30 @@ namespace EcommerceSystem.DAL.Repositories
             }).ToList();
             return customerDtos;
         }
+        //public async Task<List<CustomerDto>> GetAllCustomersAsync()
+        //{
+        //    var customers = await _context.Customers
+        //        .FromSqlRaw("EXEC GetAllCustomers")
+        //        .ToListAsync();
+        //    var customerDtos = customers.Select(c => new CustomerDto
+        //    {
+        //        Id = c.Id,
+        //        Name = c.Name,
+        //        Email = c.Email,
+        //        ShippingAddress = c.ShippingAddress
+        //    }).ToList();
+        //    return customerDtos;
+        //}
         public async Task AddCustomerAsync(CustomerDto customerDto)
         {
-            var context = new EcommerceSystemdb();
             var customer = new Customer { Name = customerDto.Name, Email = customerDto.Email, ShippingAddress = customerDto.ShippingAddress };
-            await context.Customers.AddAsync(customer);
-            await context.SaveChangesAsync();
+            await _context.Customers.AddAsync(customer);
+            await _context.SaveChangesAsync();
             Console.WriteLine("Customer added successfully!");
         }
         public async Task<int?> GetCustomerIdAsync()
         {
-            using var context = new EcommerceSystemdb();
-            var customerId = await context.Customers
+            var customerId = await _context.Customers
                 .OrderByDescending(c => c.Id)
                 .Select(c => c.Id)
                 .FirstOrDefaultAsync();
@@ -41,8 +61,7 @@ namespace EcommerceSystem.DAL.Repositories
         }
         public async Task<string> PlaceOrderAsync(int productId,int customerId, int quantity)
         {
-            var context = new EcommerceSystemdb();
-            var product = await context.Products.FindAsync(productId);
+            var product = await _context.Products.FindAsync(productId);
             if (product == null)
             {
                 return "Product not found.";
@@ -55,7 +74,7 @@ namespace EcommerceSystem.DAL.Repositories
             {
                 return "Quantity exceeds available stock.";
             }
-            var customer = await context.Customers.FindAsync(customerId);
+            var customer = await _context.Customers.FindAsync(customerId);
             if (customer == null)
             {
                 return "Customer not found.";
@@ -75,9 +94,9 @@ namespace EcommerceSystem.DAL.Repositories
                 }
             };
             product.Stock -= quantity;
-            context.Orders.Add(order);
-            context.OrderDetails.AddRange(order.OrderDetails);
-            await context.SaveChangesAsync();
+            _context.Orders.Add(order);
+            _context.OrderDetails.AddRange(order.OrderDetails);
+            await _context.SaveChangesAsync();
             return $"Order placed successfully! Total Amount: {order.TotalAmount:C}";
         }
     }

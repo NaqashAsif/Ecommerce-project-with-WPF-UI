@@ -8,20 +8,25 @@ namespace EcommerceSystem.DAL
 {
     public class ProductRepostory: IProductRepostory
     {
+        private readonly EcommerceSystemdb _context;
+        public ProductRepostory(EcommerceSystemdb context)
+        {
+            _context = context;
+        }
         private readonly string connectionString;
-
         public ProductRepostory()
         {
+            _context = new EcommerceSystemdb();
             connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         }
         public async Task RemoveProductAsync(int Id)
         {
-            var context = new EcommerceSystemdb();
-            var product = await context.Products.FindAsync(Id);
+           // var context = new EcommerceSystemdb();
+            var product = await _context.Products.FindAsync(Id);
             if (product != null)
             {
-                context.Products.Remove(product);
-                await context.SaveChangesAsync();
+               _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
                 Console.WriteLine("Product removed successfully!");
             }
             else
@@ -31,13 +36,10 @@ namespace EcommerceSystem.DAL
         }
         public async Task AddProductAsync(ProductDto productDto)
         {
-            var context = new EcommerceSystemdb();
-            
-
+            //var context = new EcommerceSystemdb();
             var product = new Product { Name = productDto.Name, Price = productDto.Price, Stock = productDto.Stock };
-
-            await context.Products.AddAsync(product);
-            await context.SaveChangesAsync();
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
             Console.WriteLine("Product added successfully!");
         }
         public async Task<List<ProductDto>> ViewProductsAsync()
@@ -74,18 +76,17 @@ namespace EcommerceSystem.DAL
                 Price= c.Price,
                 Stock = c.Stock
             }).ToList();
-                return productDtos;
+            return productDtos;
         }
         public async Task UpdateProductAsync(int Id, ProductDto productDto)
         {
-            var context = new EcommerceSystemdb();
-            var product = await context.Products.FindAsync(Id);
+            var product = await _context.Products.FindAsync(Id);
             if (product != null)
             {
                 product.Name = productDto.Name;
                 product.Price = productDto.Price;
                 product.Stock = productDto.Stock;
-                await context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 Console.WriteLine("Product updated successfully!");
             }
             else
