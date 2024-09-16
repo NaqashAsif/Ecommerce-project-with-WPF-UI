@@ -1,11 +1,11 @@
 ﻿using EcommerceSystem.Core.Services;
+using System;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace EcommerceSystem.UI
 {
-    /// <summary>
-    /// Interaction logic for DeleteProductWindow.xaml
-    /// </summary>
     public partial class DeleteProductWindow : Window
     {
         private readonly IProductService _productService;
@@ -14,8 +14,20 @@ namespace EcommerceSystem.UI
         {
             InitializeComponent();
             _productService = productService;
+            LoadProducts();
         }
-
+        private async void LoadProducts()
+        {
+            try
+            {
+                var products = await _productService.ViewProductsAsync();
+                ProductsDataGrid.ItemsSource = products;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while loading products: {ex.Message}", "Error");
+            }
+        }
         private async void DeleteProduct_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -24,6 +36,7 @@ namespace EcommerceSystem.UI
                 await _productService.RemoveProductAsync(id);
                 MessageBox.Show("Product removed successfully!");
                 IdTextBox.Clear();
+                LoadProducts(); 
             }
             catch (FormatException)
             {
@@ -34,8 +47,7 @@ namespace EcommerceSystem.UI
                 MessageBox.Show($"An error occurred while deleting the product: {ex.Message}", "Error");
             }
         }
-
-        private void IdTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void IdTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(IdTextBox.Text))
             {
@@ -45,6 +57,12 @@ namespace EcommerceSystem.UI
             {
                 IdPlaceholder.Visibility = Visibility.Collapsed;
             }
+        }
+        private void BackToAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            var adminWindow = new AdminWindow(_productService);
+            adminWindow.Show();
+            this.Close();
         }
     }
 }

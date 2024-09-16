@@ -1,24 +1,9 @@
 ﻿using EcommerceSystem.Core.DTOS;
 using EcommerceSystem.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
 namespace EcommerceSystem.UI
 {
-    /// <summary>
-    /// Interaction logic for UpdateProductWindow.xaml
-    /// </summary>
     public partial class UpdateProductWindow : Window
     {
         private readonly IProductService _productService;
@@ -27,8 +12,31 @@ namespace EcommerceSystem.UI
         {
             InitializeComponent();
             _productService = productService;
+            LoadProducts();
         }
-
+        private async void LoadProducts()
+        {
+            try
+            {
+                var products = await _productService.ViewProductsAsync();
+                ProductsDataGrid.ItemsSource = products;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while loading products: {ex.Message}", "Error");
+            }
+        }
+        private void ProductsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedProduct = ProductsDataGrid.SelectedItem as ProductDto;
+            if (selectedProduct != null)
+            {
+                IdTextBox.Text = selectedProduct.Id.ToString();
+                NameTextBox.Text = selectedProduct.Name;
+                PriceTextBox.Text = selectedProduct.Price.ToString("F2");
+                StockTextBox.Text = selectedProduct.Stock.ToString();
+            }
+        }
         private async void UpdateProduct_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -52,6 +60,7 @@ namespace EcommerceSystem.UI
 
                 await _productService.UpdateProductAsync(id, productDto);
                 MessageBox.Show("Product updated successfully!");
+                LoadProducts(); 
             }
             catch (FormatException)
             {
@@ -62,35 +71,11 @@ namespace EcommerceSystem.UI
                 MessageBox.Show($"An error occurred while updating the product: {ex.Message}", "Error");
             }
         }
-        private void RemovePlaceholderText(object sender, System.Windows.RoutedEventArgs e)
+        private void BackToAdmin_Click(object sender, RoutedEventArgs e)
         {
-            var textBox = sender as TextBox;
-            if (textBox != null && textBox.Text == GetPlaceholderText(textBox))
-            {
-                textBox.Text = string.Empty;
-                textBox.Foreground = System.Windows.Media.Brushes.Black;
-            }
-        }
-        private void AddPlaceholderText(object sender, System.Windows.RoutedEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            if (textBox != null && string.IsNullOrEmpty(textBox.Text))
-            {
-                textBox.Text = GetPlaceholderText(textBox);
-                textBox.Foreground = System.Windows.Media.Brushes.Gray;
-            }
-        }
-        private string GetPlaceholderText(TextBox textBox)
-        {
-            if (textBox == IdTextBox)
-                return "Enter Product ID";
-            if (textBox == NameTextBox)
-                return "Enter new product name";
-            if (textBox == PriceTextBox)
-                return "Enter new product price";
-            if (textBox == StockTextBox)
-                return "Enter new product stock";
-            return string.Empty;
+            var adminWindow = new AdminWindow(_productService);
+            adminWindow.Show();
+            this.Close();
         }
     }
 }

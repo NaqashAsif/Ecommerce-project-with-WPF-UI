@@ -3,14 +3,85 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EcommerceSystem.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Ecommerce System" Height="450" Width="800" 
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#f4f4f9">
     <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="Welcome to Ecommerce System" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
-            <Button Content="Admin" Width="150" Height="40" Margin="10" Click="AdminButton_Click"/>
-            <Button Content="Customer" Width="150" Height="40" Margin="10" Click="CustomerButton_Click"/>
-        </StackPanel>
+        <!-- Wrap StackPanel in a Border to apply CornerRadius -->
+        <Border Background="#ffffff" Padding="30" Width="400" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel>
+                <!-- Header -->
+                <TextBlock Text="Welcome to Ecommerce System" 
+                           FontSize="20" 
+                           FontWeight="Bold" 
+                           Foreground="#333333" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,20"/>
+
+                <!-- Admin Button -->
+                <Button Content="Admin" 
+                        Width="200" 
+                        Height="50" 
+                        Margin="10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Background="#3498db" 
+                        Foreground="White"
+                        BorderThickness="0"
+                        Click="AdminButton_Click"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" 
+                                    CornerRadius="5">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#2980b9"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- Customer Button -->
+                <Button Content="Customer" 
+                        Width="200" 
+                        Height="50" 
+                        Margin="10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Background="#2ecc71" 
+                        Foreground="White"
+                        BorderThickness="0"
+                        Click="CustomerButton_Click"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" 
+                                    CornerRadius="5">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#27ae60"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

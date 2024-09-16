@@ -3,16 +3,182 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EcommerceSystem.UI"
         mc:Ignorable="d"
-        Title="Admin Panel" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Admin Panel" Height="600" Width="800" 
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#f4f4f9">
     <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="Admin Panel - Product Management" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
-            <Button Content="Add Product" Width="200" Height="40" Margin="10" Click="AddProduct_Click"/>
-            <Button Content="View Products" Width="200" Height="40" Margin="10" Click="ViewProducts_Click"/>
-            <Button Content="Update Product" Width="200" Height="40" Margin="10" Click="UpdateProduct_Click"/>
-            <Button Content="Delete Product" Width="200" Height="40" Margin="10" Click="DeleteProduct_Click"/>
-        </StackPanel>
+        <!-- Wrapping the StackPanel in a Border for design and rounded corners -->
+        <Border Background="#ffffff" Padding="30" Width="400" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel>
+                <!-- Header Text -->
+                <TextBlock Text="Admin Panel - Product Management" 
+                           FontSize="20" 
+                           FontWeight="Bold" 
+                           Foreground="#333333" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,20"/>
+                
+                <!-- Add Product Button -->
+                <Button Content="Add Product" 
+                        Width="200" 
+                        Height="50" 
+                        Margin="10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Background="#3498db" 
+                        Foreground="White"
+                        BorderThickness="0"
+                        Click="AddProduct_Click"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" 
+                                    CornerRadius="5">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#2980b9"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                
+                <!-- View Products Button -->
+                <Button Content="View Products" 
+                        Width="200" 
+                        Height="50" 
+                        Margin="10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Background="#2ecc71" 
+                        Foreground="White"
+                        BorderThickness="0"
+                        Click="ViewProducts_Click"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" 
+                                    CornerRadius="5">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#27ae60"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- Update Product Button -->
+                <Button Content="Update Product" 
+                        Width="200" 
+                        Height="50" 
+                        Margin="10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Background="#f39c12" 
+                        Foreground="White"
+                        BorderThickness="0"
+                        Click="UpdateProduct_Click"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" 
+                                    CornerRadius="5">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#e67e22"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- Delete Product Button -->
+                <Button Content="Delete Product" 
+                        Width="200" 
+                        Height="50" 
+                        Margin="10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Background="#e74c3c" 
+                        Foreground="White"
+                        BorderThickness="0"
+                        Click="DeleteProduct_Click"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" 
+                                    CornerRadius="5">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#c0392b"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- Back to Main Window Button -->
+                <Button Content="Back to Main" 
+                        Width="200" 
+                        Height="50" 
+                        Margin="10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Background="#bdc3c7" 
+                        Foreground="Black"
+                        BorderThickness="0"
+                        Click="BackButton_Click"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" 
+                                    CornerRadius="5">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#95a5a6"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

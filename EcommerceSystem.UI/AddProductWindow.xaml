@@ -3,31 +3,104 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EcommerceSystem.UI"
         mc:Ignorable="d"
-        Title="Add Product" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Add Product" Height="450" Width="800" 
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#f4f4f9">
     <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="Add New Product" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+        <!-- Wrapping the StackPanel in a Border for design and rounded corners -->
+        <Border Background="#ffffff" Padding="30" Width="500" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel>
+                <!-- Header Text -->
+                <TextBlock Text="Add New Product" 
+                           FontSize="20" 
+                           FontWeight="Bold" 
+                           Foreground="#333333" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,20"/>
 
-            <!-- Name Label and TextBox with placeholder behavior -->
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <Label Content="Product Name:" Width="100" VerticalAlignment="Center"/>
-                <TextBox x:Name="NameTextBox" Width="200" GotFocus="RemovePlaceholderText" LostFocus="AddPlaceholderText"/>
-            </StackPanel>
+                <!-- Product Name Input -->
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Label Content="Product Name:" Width="150" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <TextBox x:Name="NameTextBox" Width="300" Height="30" FontSize="14" Padding="5"/>
+                </StackPanel>
 
-            <!-- Price Label and TextBox with placeholder behavior -->
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <Label Content="Price:" Width="100" VerticalAlignment="Center"/>
-                <TextBox x:Name="PriceTextBox" Width="200" GotFocus="RemovePlaceholderText" LostFocus="AddPlaceholderText"/>
-            </StackPanel>
+                <!-- Price Input -->
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Label Content="Price:" Width="150" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <TextBox x:Name="PriceTextBox" Width="300" Height="30" FontSize="14" Padding="5"/>
+                </StackPanel>
 
-            <!-- Stock Label and TextBox with placeholder behavior -->
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <Label Content="Stock:" Width="100" VerticalAlignment="Center"/>
-                <TextBox x:Name="StockTextBox" Width="200" GotFocus="RemovePlaceholderText" LostFocus="AddPlaceholderText"/>
+                <!-- Stock Input -->
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Label Content="Stock:" Width="150" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <TextBox x:Name="StockTextBox" Width="300" Height="30" FontSize="14" Padding="5"/>
+                </StackPanel>
+
+                <!-- Add Product Button -->
+                <Button Content="Add Product" 
+                        Width="200" 
+                        Height="50" 
+                        Margin="10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Background="#3498db" 
+                        Foreground="White"
+                        BorderThickness="0"
+                        Click="AddProduct_Click"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" 
+                                    CornerRadius="5">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#2980b9"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- Back to Admin Panel Button -->
+                <Button Content="Back to Admin Panel" 
+                        Width="200" 
+                        Height="50" 
+                        Margin="10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Background="#bdc3c7" 
+                        Foreground="Black"
+                        BorderThickness="0"
+                        Click="BackToAdmin_Click"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" 
+                                    CornerRadius="5">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#95a5a6"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
             </StackPanel>
-            <Button Content="Add Product" Width="150" Height="40" Margin="10" Click="AddProduct_Click"/>
-        </StackPanel>
+        </Border>
     </Grid>
 </Window>

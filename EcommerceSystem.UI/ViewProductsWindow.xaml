@@ -3,17 +3,92 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EcommerceSystem.UI"
         mc:Ignorable="d"
-        Title="View Products" Height="400" Width="800">
+        Title="View Products" Height="450" Width="800" WindowStartupLocation="CenterScreen" Background="#f4f4f9">
+
     <Grid>
-        <ListBox x:Name="ProductsListBox" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=Name}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <!-- Wrapping the StackPanel in a Border for design and rounded corners -->
+        <Border Background="#ffffff" Padding="20" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel>
+                <!-- Header Text -->
+                <TextBlock Text="Product List" 
+                           FontSize="22" 
+                           FontWeight="Bold" 
+                           Foreground="#1abc9c" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,20"/>
+
+                <!-- Grid for Product Information -->
+                <DataGrid x:Name="ProductsDataGrid" 
+                          AutoGenerateColumns="False" 
+                          CanUserAddRows="False" 
+                          CanUserDeleteRows="False"
+                          HeadersVisibility="Column"
+                          Width="700" 
+                          Height="250" 
+                          HorizontalAlignment="Center"
+                          AlternatingRowBackground="LightGray"
+                          RowBackground="White"
+                          BorderBrush="#1abc9c" 
+                          BorderThickness="2">
+
+                    <!-- Defining Columns for Product Details -->
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Product ID" Binding="{Binding Id}" Width="*" FontWeight="Bold"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" FontWeight="Bold"/>
+                        <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*" FontWeight="Bold"/>
+                        <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" Width="*" FontWeight="Bold"/>
+                    </DataGrid.Columns>
+
+                    <!-- MouseOver Row Interaction -->
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Background" Value="White"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#1abc9c"/>
+                                    <!-- Green background on hover -->
+                                    <Setter Property="Foreground" Value="Green"/>
+                                    <!-- White text on hover -->
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                </DataGrid>
+
+                <!-- Back to Admin Panel Button -->
+                <Button Content="Back to Admin Panel" 
+                        Width="200" 
+                        Height="50" 
+                        Margin="10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Background="#bdc3c7" 
+                        Foreground="Black"
+                        BorderThickness="0"
+                        Click="BackToAdmin_Click"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" 
+                                    CornerRadius="5">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#95a5a6"/>
+                                    <!-- Gray background on hover -->
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
-

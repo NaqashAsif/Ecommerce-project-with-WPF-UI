@@ -3,29 +3,96 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EcommerceSystem.UI"
         mc:Ignorable="d"
-        Title="Update Product" Height="450" Width="800">
+        Title="Update Product" Height="700" Width="800" WindowStartupLocation="CenterScreen" Background="#f4f4f9">
+
     <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="Update Product" FontSize="16" FontWeight="Bold" Margin="10"/>
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <Label Content="Product ID:" Width="100" VerticalAlignment="Center"/>
-                <TextBox x:Name="IdTextBox" Width="200" GotFocus="RemovePlaceholderText" LostFocus="AddPlaceholderText"/>
+        <Border Background="#ffffff" Padding="20" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Update Product" 
+                           FontSize="22" 
+                           FontWeight="Bold" 
+                           Foreground="#1abc9c" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,20"/>
+
+                <DataGrid x:Name="ProductsDataGrid" 
+                          AutoGenerateColumns="False" 
+                          CanUserAddRows="False" 
+                          CanUserDeleteRows="False"
+                          HeadersVisibility="Column"
+                          Width="700" 
+                          Height="250" 
+                          HorizontalAlignment="Center"
+                          AlternatingRowBackground="LightGray"
+                          RowBackground="White"
+                          BorderBrush="#1abc9c" 
+                          BorderThickness="2"
+                          SelectionChanged="ProductsDataGrid_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Product ID" Binding="{Binding Id}" Width="*" FontWeight="Bold"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" FontWeight="Bold"/>
+                        <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*"/>
+                        <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" Width="*"/>
+                    </DataGrid.Columns>
+                    <!-- MouseOver Row Interaction -->
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Background" Value="White"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#1abc9c"/>
+                                    <Setter Property="Foreground" Value="Green"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                </DataGrid>
+
+
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Label Content="Product ID:" Width="100" VerticalAlignment="Center"/>
+                    <TextBox x:Name="IdTextBox" Width="200" Margin="5" IsReadOnly="False"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Label Content="Product Name:" Width="100" VerticalAlignment="Center"/>
+                    <TextBox x:Name="NameTextBox" Width="200" Margin="5"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Label Content="Price:" Width="100" VerticalAlignment="Center"/>
+                    <TextBox x:Name="PriceTextBox" Width="200" Margin="5"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Label Content="Stock:" Width="100" VerticalAlignment="Center"/>
+                    <TextBox x:Name="StockTextBox" Width="200" Margin="5"/>
+                </StackPanel>
+
+                <Button Content="Update Product" 
+                        Width="150" 
+                        Height="40" 
+                        Margin="10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Background="#3498db" 
+                        Foreground="White"
+                        BorderThickness="0"
+                        Click="UpdateProduct_Click"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand"/>
+
+                <Button Content="Back to Admin Panel" 
+                        Width="200" 
+                        Height="50" 
+                        Margin="10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Background="#bdc3c7" 
+                        Foreground="Black"
+                        BorderThickness="0"
+                        Click="BackToAdmin_Click"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <Label Content="Product Name:" Width="100" VerticalAlignment="Center"/>
-                <TextBox x:Name="NameTextBox" Width="200" GotFocus="RemovePlaceholderText" LostFocus="AddPlaceholderText"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <Label Content="Price:" Width="100" VerticalAlignment="Center"/>
-                <TextBox x:Name="PriceTextBox" Width="200" GotFocus="RemovePlaceholderText" LostFocus="AddPlaceholderText"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <Label Content="Stock:" Width="100" VerticalAlignment="Center"/>
-                <TextBox x:Name="StockTextBox" Width="200" GotFocus="RemovePlaceholderText" LostFocus="AddPlaceholderText"/>
-            </StackPanel>
-            <Button Content="Update Product" Width="150" Margin="10" Click="UpdateProduct_Click"/>
-        </StackPanel>
+        </Border>
     </Grid>
 </Window>

@@ -5,19 +5,20 @@ namespace EcommerceSystem.UI
     public partial class ViewProductsWindow : Window
     {
         private readonly IProductService _productService;
+
         public ViewProductsWindow(IProductService productService)
         {
             InitializeComponent();
             _productService = productService;
             LoadProducts();
         }
-
         private async void LoadProducts()
         {
             try
             {
                 var products = await _productService.ViewProductsAsync();
-                ProductsListBox.ItemsSource = products;
+                ProductsDataGrid.ItemsSource = products;
+
                 if (products == null || products.Count == 0)
                 {
                     MessageBox.Show("No products available.", "Information");
@@ -27,6 +28,12 @@ namespace EcommerceSystem.UI
             {
                 MessageBox.Show($"An error occurred while retrieving products: {ex.Message}", "Error");
             }
+        }
+        private void BackToAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            var adminWindow = new AdminWindow(_productService);
+            adminWindow.Show();
+            this.Close();  
         }
     }
 }

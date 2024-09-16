@@ -6,7 +6,6 @@ namespace EcommerceSystem.UI
     public partial class MainWindow : Window
     {
         private readonly IProductService _productService;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -14,9 +13,9 @@ namespace EcommerceSystem.UI
         }
         private void AdminButton_Click(object sender, RoutedEventArgs e)
         {
-            var adminWindow = new AdminWindow(_productService);
-            adminWindow.Show();
-            this.Close(); 
+            var authWindow = new AuthenticationWindow(_productService);
+            authWindow.Show();
+            this.Close();
         }
         private void CustomerButton_Click(object sender, RoutedEventArgs e)
         {
