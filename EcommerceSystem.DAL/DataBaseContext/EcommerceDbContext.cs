@@ -15,7 +15,10 @@ namespace EcommerceSystem.DAL.DataBaseContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-                string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                // Hardcoded connection string
+                string connectionString = "Server=NAQASH-ASIF-128\\SQLEXPRESS;Database=EcommerceDataBase;Trusted_Connection=True;TrustServerCertificate=True;";
+
+                // Configure DbContext to use SQL Server with the connection string
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }

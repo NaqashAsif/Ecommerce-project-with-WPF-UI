@@ -1,15 +1,16 @@
 ﻿using System.Windows;
 using EcommerceSystem.Core.Services;
+using EcommerceSystem.Services;
 namespace EcommerceSystem.UI
 {
     public partial class ViewProductsWindow : Window
     {
-        private readonly IProductService _productService;
+        private  IProductService _productService;
 
-        public ViewProductsWindow(IProductService productService)
+        public ViewProductsWindow()
         {
             InitializeComponent();
-            _productService = productService;
+            _productService = new ProductService();
             LoadProducts();
         }
         private async void LoadProducts()

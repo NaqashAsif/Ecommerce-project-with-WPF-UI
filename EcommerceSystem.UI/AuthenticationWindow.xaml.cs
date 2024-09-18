@@ -1,6 +1,5 @@
 ﻿using EcommerceSystem.Core.Services;
 using System.Windows;
-
 namespace EcommerceSystem.UI
 {
     public partial class AuthenticationWindow : Window

@@ -161,7 +161,6 @@ else
         foreach (var product in products)
         {
             Console.WriteLine($"Id: {product.Id}, Name: {product.Name}, Price: {product.Price}, Stock: {product.Stock}");
-
         }
         Console.Write("Enter Product ID To Order: ");
         int productId = int.Parse(Console.ReadLine());

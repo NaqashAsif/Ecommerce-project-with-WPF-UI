@@ -10,6 +10,11 @@ namespace EcommerceSystem.Services
         {
             _customerRepostory = customerRepostory;
         }
+
+        public CustomerService()
+        {
+        }
+
         public async Task AddCustomerAsync(CustomerDto customerDto)
         {
             await _customerRepostory.AddCustomerAsync(customerDto);
