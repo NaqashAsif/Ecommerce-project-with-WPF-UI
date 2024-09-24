@@ -12,6 +12,8 @@
     <ProjectReference Include="..\EcommerceSystem.Core\EcommerceSystem.Core.csproj" />
     <ProjectReference Include="..\EcommerceSystem.DAL\EcommerceSystem.DAL.csproj" />
     <ProjectReference Include="..\EcommerceSystem.Services\EcommerceSystem.Services.csproj" />
+    <ProjectReference Include="..\EcommerceSystem.Tests\EcommerceSystem.Tests.csproj" />
+    <ProjectReference Include="..\EcommerceSystem.WF.UI\EcommerceSystem.WF.UI.csproj" />
   </ItemGroup>
 
 </Project>

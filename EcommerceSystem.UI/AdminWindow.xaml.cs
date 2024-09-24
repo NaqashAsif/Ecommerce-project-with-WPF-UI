@@ -20,7 +20,7 @@ namespace EcommerceSystem.UI
         }
         private void ViewProducts_Click(object sender, RoutedEventArgs e)
         {
-            var viewProductsWindow = new ViewProductsWindow(_productService);
+            var viewProductsWindow = new ViewProductsWindow();
             viewProductsWindow.Show();
             this.Close();
         }
