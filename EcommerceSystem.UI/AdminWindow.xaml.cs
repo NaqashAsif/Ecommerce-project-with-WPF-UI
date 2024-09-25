@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using EcommerceSystem.Core.Services;
-
 namespace EcommerceSystem.UI
 {
     public partial class AdminWindow : Window
@@ -20,7 +19,7 @@ namespace EcommerceSystem.UI
         }
         private void ViewProducts_Click(object sender, RoutedEventArgs e)
         {
-            var viewProductsWindow = new ViewProductsWindow();
+            var viewProductsWindow = new ViewProductsWindow(_productService);
             viewProductsWindow.Show();
             this.Close();
         }

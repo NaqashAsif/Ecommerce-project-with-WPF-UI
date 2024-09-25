@@ -1,4 +1,5 @@
 ﻿using EcommerceSystem.Core.Services;
+using EcommerceSystem.UI.ViewModels;
 using System.Windows;
 
 namespace EcommerceSystem.UI

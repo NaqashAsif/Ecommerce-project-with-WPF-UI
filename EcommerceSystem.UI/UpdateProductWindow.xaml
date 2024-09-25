@@ -1,11 +1,8 @@
 ﻿<Window x:Class="EcommerceSystem.UI.UpdateProductWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        Title="Update Product" Height="700" Width="800" WindowStartupLocation="CenterScreen" Background="#f4f4f9">
-
+        Title="Update Product" Height="700" Width="800" 
+        WindowStartupLocation="CenterScreen" Background="#f4f4f9">
     <Grid>
         <Border Background="#ffffff" Padding="20" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel>
@@ -28,46 +25,38 @@
                           RowBackground="White"
                           BorderBrush="#1abc9c" 
                           BorderThickness="2"
-                          SelectionChanged="ProductsDataGrid_SelectionChanged">
+                          ItemsSource="{Binding Products}"
+                          SelectedItem="{Binding SelectedProduct, Mode=TwoWay}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Product ID" Binding="{Binding Id}" Width="*" FontWeight="Bold"/>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" FontWeight="Bold"/>
                         <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*"/>
                         <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" Width="*"/>
                     </DataGrid.Columns>
-                    <!-- MouseOver Row Interaction -->
-                    <DataGrid.RowStyle>
-                        <Style TargetType="DataGridRow">
-                            <Setter Property="Background" Value="White"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#1abc9c"/>
-                                    <Setter Property="Foreground" Value="Green"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </DataGrid.RowStyle>
                 </DataGrid>
-
 
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <Label Content="Product ID:" Width="100" VerticalAlignment="Center"/>
-                    <TextBox x:Name="IdTextBox" Width="200" Margin="5" IsReadOnly="False"/>
+                    <TextBox Text="{Binding SelectedProduct.Id, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5" IsReadOnly="True"/>
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <Label Content="Product Name:" Width="100" VerticalAlignment="Center"/>
-                    <TextBox x:Name="NameTextBox" Width="200" Margin="5"/>
+                    <TextBox Text="{Binding SelectedProduct.Name, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5"/>
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <Label Content="Price:" Width="100" VerticalAlignment="Center"/>
-                    <TextBox x:Name="PriceTextBox" Width="200" Margin="5"/>
+                    <TextBox Text="{Binding SelectedProduct.Price, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5"/>
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <Label Content="Stock:" Width="100" VerticalAlignment="Center"/>
-                    <TextBox x:Name="StockTextBox" Width="200" Margin="5"/>
+                    <TextBox Text="{Binding SelectedProduct.Stock, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5"/>
                 </StackPanel>
 
                 <Button Content="Update Product" 
+                        Command="{Binding UpdateProductCommand}" 
                         Width="150" 
                         Height="40" 
                         Margin="10"
@@ -76,11 +65,11 @@
                         Background="#3498db" 
                         Foreground="White"
                         BorderThickness="0"
-                        Click="UpdateProduct_Click"
                         HorizontalAlignment="Center"
                         Cursor="Hand"/>
 
                 <Button Content="Back to Admin Panel" 
+                        Command="{Binding BackToAdminCommand}" 
                         Width="200" 
                         Height="50" 
                         Margin="10"
@@ -89,7 +78,6 @@
                         Background="#bdc3c7" 
                         Foreground="Black"
                         BorderThickness="0"
-                        Click="BackToAdmin_Click"
                         HorizontalAlignment="Center"
                         Cursor="Hand"/>
             </StackPanel>
